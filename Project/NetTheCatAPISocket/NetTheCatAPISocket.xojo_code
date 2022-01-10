@@ -9,14 +9,9 @@ Inherits URLConnection
 		  
 		  // only if the HTTP status was successful and the content isn't empty
 		  if (HTTPStatus = 200) AND (not content.IsEmpty) then
-		    'DIM temp As MemoryBlock = Content.Data
-		    'DIM mb As NEW MemoryBlock(Content.Size)
-		    'mb.StringValue(0, mb.Size) = temp.StringValue(0, mb.Size)
-		    
 		    catImage = Picture.FromData(content)
+		    RaiseEvent CatReceived catImage
 		  end if
-		  
-		  RaiseEvent CatReceived catImage
 		End Sub
 	#tag EndEvent
 
