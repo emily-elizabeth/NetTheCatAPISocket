@@ -22,7 +22,7 @@ Begin Window Window1
    MinWidth        =   64
    Placement       =   0
    Resizeable      =   True
-   Title           =   "Untitled"
+   Title           =   "What are cats?"
    Visible         =   True
    Width           =   600
    Begin Canvas Canvas1
@@ -85,6 +85,8 @@ Begin Window Window1
       Width           =   560
    End
    Begin NetTheCatAPISocket NetTheCatAPISocket1
+      AllowCertificateValidation=   False
+      HTTPStatusCode  =   0
       Index           =   -2147483648
       LockedInPosition=   False
       Scope           =   0
@@ -114,7 +116,18 @@ End
 		  #Pragma Unused areas
 		  
 		  if (self.mCat <> Nil) then
-		    g.DrawPicture self.mCat, 0, 0, me.Width, me.Height
+		    if (self.mCat.Width > me.Width) OR (self.mCat.Height > me.Height) then
+		      DIM ratio As Double = Min(me.Height / self.mCat.Height, me.Width / self.mCat.Width)
+		      // calculate the new size
+		      DIM newWidth As Integer = self.mCat.Width * ratio
+		      DIM newHeight As Integer = self.mCat.Height * ratio
+		      // create new picture
+		      DIM newPic As NEW Picture(newWidth, newHeight, 32)
+		      newPic.Graphics.DrawPicture self.mCat, 0, 0, newWidth, newHeight, 0, 0, self.mCat.Width, self.mCat.Height
+		      g.DrawPicture newPic, 0, 0, newPic.Width, me.Height
+		    else
+		      g.DrawPicture self.mCat, 0, 0, me.Width, me.Height
+		    end if
 		  end if
 		End Sub
 	#tag EndEvent
