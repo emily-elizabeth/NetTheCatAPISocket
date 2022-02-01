@@ -42,7 +42,7 @@ Begin Window Window1
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   True
-      Scope           =   0
+      Scope           =   2
       TabIndex        =   0
       TabPanelIndex   =   0
       TabStop         =   True
@@ -71,7 +71,7 @@ Begin Window Window1
       LockLeft        =   True
       LockRight       =   True
       LockTop         =   False
-      Scope           =   0
+      Scope           =   2
       TabIndex        =   1
       TabPanelIndex   =   0
       TabStop         =   True
@@ -82,15 +82,47 @@ Begin Window Window1
       Transparent     =   False
       Underline       =   False
       Visible         =   True
-      Width           =   560
+      Width           =   468
    End
    Begin NetTheCatAPISocket NetTheCatAPISocket1
       AllowCertificateValidation=   False
       HTTPStatusCode  =   0
       Index           =   -2147483648
       LockedInPosition=   False
-      Scope           =   0
+      Scope           =   2
       TabPanelIndex   =   0
+   End
+   Begin PushButton PushButton2
+      AutoDeactivate  =   True
+      Bold            =   False
+      ButtonStyle     =   0
+      Cancel          =   False
+      Caption         =   "Save"
+      Default         =   False
+      Enabled         =   True
+      Height          =   20
+      HelpTag         =   ""
+      Index           =   -2147483648
+      InitialParent   =   ""
+      Italic          =   False
+      Left            =   500
+      LockBottom      =   True
+      LockedInPosition=   False
+      LockLeft        =   False
+      LockRight       =   True
+      LockTop         =   False
+      Scope           =   2
+      TabIndex        =   2
+      TabPanelIndex   =   0
+      TabStop         =   True
+      TextFont        =   "System"
+      TextSize        =   0.0
+      TextUnit        =   0
+      Top             =   360
+      Transparent     =   False
+      Underline       =   False
+      Visible         =   True
+      Width           =   80
    End
 End
 #tag EndWindow
@@ -144,6 +176,16 @@ End
 		Sub CatReceived(cat As Picture)
 		  self.mCat = cat
 		  self.Canvas1.Refresh
+		End Sub
+	#tag EndEvent
+#tag EndEvents
+#tag Events PushButton2
+	#tag Event
+		Sub Action()
+		  DIM f As FolderItem = FolderItem.ShowSaveFileDialog(".png", "Cat " + DateTime.Now.ToString(DateTime.FormatStyles.Medium, DateTime.FormatStyles.Medium) + ".png")
+		  if (f <> Nil) AND (NOT f.Exists) then
+		    self.mCat.Save f, Picture.Formats.PNG
+		  end if
 		End Sub
 	#tag EndEvent
 #tag EndEvents
